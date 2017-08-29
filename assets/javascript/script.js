@@ -12,8 +12,6 @@ let submitButton = $("#submitButton");
 let searchBox = $("#searchBox");
 let marvelHeros = $("#marvelHeros");
 let originalURL = "https://gateway.marvel.com:443/v1/public/characters?limit=100&ts=1&apikey=b73ee211c9d7a4ee05cb511e9e20a6d5&hash=f85a72659e7ae4456d7685de2fec6cc9";
-let apiURL = "https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=";
-let keys = "&limit=100&ts=1&apikey=b73ee211c9d7a4ee05cb511e9e20a6d5&hash=f85a72659e7ae4456d7685de2fec6cc9";
 
 
 //grabs hero name and image and adds to table
@@ -41,12 +39,23 @@ let keys = "&limit=100&ts=1&apikey=b73ee211c9d7a4ee05cb511e9e20a6d5&hash=f85a726
     submitButton.click(function(){
     table.html("");
     let searchCriteria = searchBox.val();
-    let newURL = apiURL+searchCriteria+keys;
-    originalURL = newURL;
 
-    getHeros();
-//dont refresh page
-      return false;
+    if (searchCriteria === ""){
+      originalURL = "https://gateway.marvel.com:443/v1/public/characters?limit=100&ts=1&apikey=b73ee211c9d7a4ee05cb511e9e20a6d5&hash=f85a72659e7ae4456d7685de2fec6cc9";
+      getHeros();
+
+    } else {
+
+      let newURL = originalURL+"&nameStartsWith="+searchCriteria;
+      originalURL = newURL;
+
+      getHeros();
+  //dont refresh page
+        return false;
+
+    }
+
+
 
     })
 //when brand of nav bar is clicked, refresh the page with the orginal table
